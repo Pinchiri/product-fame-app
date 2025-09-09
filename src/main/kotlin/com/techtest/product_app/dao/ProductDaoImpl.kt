@@ -81,9 +81,9 @@ class ProductDaoImpl(private val jdbcClient: JdbcClient) : ProductDao {
         .param(product.handle)
         .param(product.vendor)
         .param(product.createdAt)
-        .update(keyHolder)
+        .update(keyHolder, "id")
         
-        val generatedId = keyHolder.key?.toLong() ?: throw RuntimeException("Failed to get generated ID")
+        val generatedId = keyHolder.keys?.get("id") as Long? ?: throw RuntimeException("Failed to get generated ID")
         return product.copy(id = generatedId)
     }
     

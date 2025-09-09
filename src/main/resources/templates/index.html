@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog App</title>
+    
+    <!-- Web Awesome CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.17.1/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.17.1/cdn/shoelace-autoloader.js"></script>
+    
+    <!-- HTMX CDN -->
+    <script src="https://unpkg.com/htmx.org@2.0.6" integrity="sha384-Q6OYgs9GrFkZjvFYFd9uHmOLn2RgNFUWCJRyJVT5UQV2UEGwz2Z9X6iY3LpObdx3" crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: var(--sl-color-neutral-50);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--sl-color-neutral-0);
+            border-radius: var(--sl-border-radius-medium);
+            box-shadow: var(--sl-shadow-small);
+        }
+        
+        .main-content {
+            background: var(--sl-color-neutral-0);
+            padding: 2rem;
+            border-radius: var(--sl-border-radius-medium);
+            box-shadow: var(--sl-shadow-small);
+        }
+        
+        .load-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        #products-container {
+            margin-top: 2rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛍️ Product Catalog App</h1>
+        <p>Manage your product catalog with ease</p>
+    </div>
+    
+    <div class="main-content">
+        <div class="load-section">
+            <sl-button 
+                variant="primary" 
+                size="large"
+                hx-get="/products"
+                hx-target="#products-container"
+                hx-indicator="#loading-indicator">
+                <sl-icon slot="prefix" name="download"></sl-icon>
+                Load Products
+            </sl-button>
+        </div>
+        
+        <div id="loading-indicator" class="loading htmx-indicator">
+            <sl-spinner style="font-size: 2rem;"></sl-spinner>
+            <p>Loading products...</p>
+        </div>
+        
+        <div id="products-container">
+            <!-- Products table and form will be loaded here via HTMX -->
+        </div>
+    </div>
+</body>
+</html>

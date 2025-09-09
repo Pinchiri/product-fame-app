@@ -68,9 +68,9 @@ class VariantDaoImpl(private val jdbcClient: JdbcClient) : VariantDao {
         .param(variant.price)
         .param(variant.available)
         .param(variant.createdAt)
-        .update(keyHolder)
+        .update(keyHolder, "id")
         
-        val generatedId = keyHolder.key?.toLong() ?: throw RuntimeException("Failed to get generated ID")
+        val generatedId = keyHolder.keys?.get("id") as Long? ?: throw RuntimeException("Failed to get generated ID")
         return variant.copy(id = generatedId)
     }
     
