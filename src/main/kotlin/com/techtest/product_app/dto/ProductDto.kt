@@ -7,5 +7,11 @@ data class ProductDto(
     val title: String,
     val handle: String,
     val vendor: String?,
-    val variants: List<VariantDto>
+    @JsonProperty("product_type")
+    val productType: String?,
+    @JsonProperty("created_at")
+    val createdAt: String?,
+    @JsonProperty("updated_at")
+    val updatedAt: String?,
+    val variants: List<VariantDto> = emptyList()
 )

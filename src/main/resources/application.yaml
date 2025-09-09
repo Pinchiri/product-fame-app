@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: product-app
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product-db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  # Solo para desactivar SQL init si usas Flyway
+  sql:
+    init:
+      mode: never
+
+  thymeleaf:
+    cache: false   # Util en dev para recargar plantillas
+
+logging:
+  level:
+    org.flywaydb: INFO
+    org.springframework.jdbc: DEBUG
+
+# Config de la app (para el Scheduled Job)
+app:
+  import:
+    url: https://famme.no/products.json
+    limit: 50

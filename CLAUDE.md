@@ -55,6 +55,17 @@ A **Product Catalog Application** built with modern Spring Boot 3.5.5 and Kotlin
 ```
 src/main/kotlin/com/techtest/product_app/
 ├── ProductAppApplication.kt           # Main Spring Boot application class
+├── controller/                       # Web controllers
+│   └── ProductController.kt          # Thymeleaf endpoints with HTMX
+├── service/                          # Business logic layer
+│   └── ProductService.kt             # Business logic for product operations
+├── job/                              # Scheduled jobs
+│   └── ProductImportJob.kt           # Scheduled product import from external API
+├── dao/                              # Data access layer
+│   ├── ProductDao.kt                 # Product DAO interface
+│   ├── ProductDaoImpl.kt             # Product CRUD with JdbcClient
+│   ├── VariantDao.kt                 # Variant DAO interface
+│   └── VariantDaoImpl.kt             # Variant CRUD with JdbcClient
 ├── dto/                              # Data Transfer Objects
 │   ├── ProductDto.kt                 # JSON API response mapping
 │   └── VariantDto.kt                 # Product variant representation
@@ -76,7 +87,7 @@ src/test/kotlin/com/techtest/product_app/
 **Normalized relational design** with proper foreign key relationships:
 
 - **products** table: id, ext_id (unique), title, handle, vendor, created_at
-- **variants** table: id, product_id (FK), ext_id, title, sku, price_cents, available, created_at
+- **variants** table: id, product_id (FK), ext_id, title, sku, price (DECIMAL), available, created_at
 
 Uses **BIGSERIAL** primary keys and includes performance indexes on ext_id fields for API lookups.
 
@@ -86,7 +97,7 @@ Uses **BIGSERIAL** primary keys and includes performance indexes on ext_id field
 - **Spring Data JDBC** with JdbcClient (modern Spring Boot 3.x approach)
 - **Entity classes** use `@Table` annotations, not JPA
 - **Flyway migrations** handle schema versioning automatically
-- **Price storage**: Stored as integers in cents to avoid floating-point issues
+- **Price storage**: Stored as DECIMAL(10,2) for precise monetary calculations
 
 ### Application Layer  
 - **Scheduled jobs** with `@Scheduled(initialDelay=0)` for immediate startup execution
@@ -109,13 +120,16 @@ Uses **BIGSERIAL** primary keys and includes performance indexes on ext_id field
 - PostgreSQL connection configured via Spring Boot properties
 - No separate migration command needed - handled by framework
 
-### Missing Components (Implementation Status)
-Based on analysis, the following components are **not yet implemented**:
-- Controllers/REST endpoints (no @Controller or @RestController found)
-- Service layer classes (no @Service annotations found) 
-- Repository/DAO classes (no @Repository annotations found)
+### Implementation Status
+Recently implemented components:
+- ✅ **Controllers**: ProductController with Thymeleaf endpoints
+- ✅ **Service layer**: Clean, readable ProductService focused on business logic
+- ✅ **DAO layer**: Interface-based DAO pattern with ProductDao/VariantDao and their JdbcClient implementations
+- ✅ **Job layer**: ProductImportJob separated from service for scheduled tasks
+- ✅ **Configuration**: @EnableScheduling enabled in main application class
+
+Still missing:
 - Thymeleaf templates (no templates/ directory found)
-- Scheduled job implementation (mentioned in requirements but not found)
 
 ### External Dependencies
 - **htmx-spring-boot-thymeleaf**: Provides HTMX integration with Thymeleaf
