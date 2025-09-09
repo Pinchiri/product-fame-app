@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Empty State Component -->
+<div th:fragment="no-products" class="empty-state">
+    <wa-icon name="inbox" class="empty-state-icon"></wa-icon>
+    <p class="empty-state-text">No products found. Try refreshing from the API.</p>
+</div>
+
+<!-- Generic Empty State -->
+<div th:fragment="empty(icon, message)" class="empty-state">
+    <wa-icon th:name="${icon}" class="empty-state-icon"></wa-icon>
+    <p class="empty-state-text" th:text="${message}">No items found.</p>
+</div>
+
+</body>
+</html>

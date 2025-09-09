@@ -32,18 +32,17 @@ class ProductController(
     fun addProduct(
         @RequestParam title: String,
         @RequestParam(required = false) handle: String?,
+        @RequestParam(required = false) vendor: String?,
         model: Model
     ): String {
-        // Crear producto simple para demostración
         val newProduct = Product(
-            extId = System.currentTimeMillis(), // Temporal para demo
+            extId = System.currentTimeMillis(),
             title = title,
             handle = handle ?: title.lowercase().replace(" ", "-"),
-            vendor = "Manual Entry"
+            vendor = vendor ?: "Manual Entry"
         )
         productDao.save(newProduct)
         
-        // Retornar fragment actualizado usando ProductDto con variants
         val productsWithVariants = productService.getAllProductsWithVariants()
         model.addAttribute("rows", productsWithVariants)
         return "fragments/product-rows :: rows"

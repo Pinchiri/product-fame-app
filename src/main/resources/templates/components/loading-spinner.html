@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Loading Spinner Component -->
+<div th:fragment="spinner(message)" class="htmx-indicator loading-indicator">
+    <wa-spinner style="font-size: 2rem;"></wa-spinner>
+    <p th:text="${message}">Loading...</p>
+</div>
+
+<!-- Inline Spinner Component -->
+<div th:fragment="inline-spinner(message)" class="htmx-indicator refresh-indicator">
+    <wa-spinner></wa-spinner>
+    <span th:text="${message}">Loading...</span>
+</div>
+
+</body>
+</html>

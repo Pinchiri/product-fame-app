@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Add Product Form Component -->
+<div th:fragment="add-form" class="form-section">
+    <wa-card>
+        <div slot="header">
+            <h3>
+                <wa-icon name="plus-circle" style="margin-right: 0.5rem;"></wa-icon>
+                Add New Product
+            </h3>
+        </div>
+        
+        <form hx-post="/products" 
+              hx-target="#products-container"
+              hx-indicator="#form-indicator"
+              class="form-grid">
+            
+            <div class="form-row">
+                <wa-input 
+                    name="title" 
+                    label="Product Title" 
+                    placeholder="Enter product title"
+                    required>
+                </wa-input>
+                
+                <wa-input 
+                    name="vendor" 
+                    label="Vendor" 
+                    placeholder="Enter vendor name">
+                </wa-input>
+            </div>
+            
+            <wa-input 
+                name="handle" 
+                label="Product Handle" 
+                placeholder="product-handle (optional)"
+                help-text="Leave empty to auto-generate from title">
+            </wa-input>
+            
+            <div class="form-actions">
+                <wa-button 
+                    variant="primary" 
+                    type="submit"
+                    class="form-primary-button">
+                    <wa-icon slot="prefix" name="plus"></wa-icon>
+                    Add Product
+                </wa-button>
+                
+                <wa-button 
+                    variant="default" 
+                    type="reset">
+                    <wa-icon slot="prefix" name="arrow-counterclockwise"></wa-icon>
+                    Reset
+                </wa-button>
+            </div>
+            
+            <div id="form-indicator">
+                <div th:replace="~{components/loading-spinner :: inline-spinner('Adding product...')}"></div>
+            </div>
+        </form>
+    </wa-card>
+</div>
+
+</body>
+</html>

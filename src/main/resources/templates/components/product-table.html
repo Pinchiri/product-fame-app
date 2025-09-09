@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Product Table Component -->
+<div th:fragment="table(products)" class="product-table-section">
+    <div class="table-header">
+        <h2>Products</h2>
+        <wa-button 
+            variant="outline" 
+            size="small"
+            hx-post="/products/refresh"
+            hx-target="#products-container"
+            hx-indicator="#refresh-indicator">
+            <wa-icon name="arrow-clockwise" slot="prefix"></wa-icon>
+            Refresh from API
+        </wa-button>
+    </div>
+    
+    <div id="refresh-indicator">
+        <div th:replace="~{components/loading-spinner :: inline-spinner('Refreshing products from external API...')}"></div>
+    </div>
+    
+    <div th:if="${#lists.isEmpty(products)}">
+        <div th:replace="~{components/empty-state :: no-products}"></div>
+    </div>
+    
+    <div th:if="${not #lists.isEmpty(products)}">
+        <wa-table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Handle</th>
+                        <th>Vendor</th>
+                        <th>Variants</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}">1</td>
+                        <td th:text="${product.title}">Product Title</td>
+                        <td>
+                            <wa-tag variant="neutral" size="small" th:text="${product.handle}">handle</wa-tag>
+                        </td>
+                        <td th:text="${product.vendor ?: 'N/A'}">Vendor</td>
+                        <td>
+                            <wa-badge variant="primary" th:text="${product.variants.size()}">0</wa-badge>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </wa-table>
+    </div>
+</div>
+
+</body>
+</html>
