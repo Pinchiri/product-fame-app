@@ -4,18 +4,6 @@
 
 <!-- Product Table Component -->
 <div th:fragment="table(products)" class="product-table-section">
-    <div class="table-header">
-        <h2>Products</h2>
-        <wa-button 
-            variant="outline" 
-            size="small"
-            hx-post="/products/refresh"
-            hx-target="#products-container"
-            hx-indicator="#refresh-indicator">
-            Refresh from API
-        </wa-button>
-    </div>
-    
     <div id="refresh-indicator">
         <div th:replace="~{components/loading-spinner :: inline-spinner('Refreshing products from external API...')}"></div>
     </div>

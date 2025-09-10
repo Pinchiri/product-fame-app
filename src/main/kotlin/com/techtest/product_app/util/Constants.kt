@@ -31,4 +31,22 @@ object Constants {
         const val PRODUCT_ID = "productId"
         const val CREATED_AT = "createdAt"
     }
+    
+    // Template paths
+    object Templates {
+        const val INDEX = "index"
+        const val PRODUCT_ROWS_FRAGMENT = "fragments/product-rows :: rows"
+    }
+    
+    // Model attribute names
+    object ModelAttributes {
+        const val ROWS = "rows"
+    }
+    
+    // General constants
+    object General {
+        const val DEFAULT_VENDOR = "Manual Entry"
+        const val SEPARATOR = "-"
+        const val SPACE = " "
+    }
 }

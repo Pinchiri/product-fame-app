@@ -39,10 +39,12 @@ class ProductServiceImpl(
     
     override fun getAllProductsWithVariants(): List<ProductDto> {
         val products = productDao.findAll()
-        return products.map { product ->
-            val variants = variantDao.findByProductId(product.id!!)
-            val variantDtos = variants.map { it.toDto() }
-            product.toDto(variantDtos)
+        return products.mapNotNull { product ->
+            product.id?.let { productId ->
+                val variants = variantDao.findByProductId(productId)
+                val variantDtos = variants.map { it.toDto() }
+                product.toDto(variantDtos)
+            }
         }
     }
     
