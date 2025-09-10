@@ -12,14 +12,14 @@ import com.techtest.product_app.dao.VariantDao
 import com.techtest.product_app.dto.VariantDto
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
+import org.springframework.web.client.RestClient
 import java.time.LocalDateTime
 
 @Service
 class ProductServiceImpl(
     private val productDao: ProductDao,
     private val variantDao: VariantDao,
-    private val restTemplate: RestTemplate = RestTemplate()
+    private val restClient: RestClient
 ) : ProductService {
     
     private val logger = LoggerFactory.getLogger(ProductServiceImpl::class.java)
@@ -65,7 +65,10 @@ class ProductServiceImpl(
     }
     
     private fun fetchProductsFromExternalApi(): ProductsResponse? {
-        return restTemplate.getForObject(EXTERNAL_API_URL, ProductsResponse::class.java)
+        return restClient.get()
+            .uri(EXTERNAL_API_URL)
+            .retrieve()
+            .body(ProductsResponse::class.java)
     }
     
     private fun limitProductsForImport(apiResponse: ProductsResponse?): List<ProductDto> {
