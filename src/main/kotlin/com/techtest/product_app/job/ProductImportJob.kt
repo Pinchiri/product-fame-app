@@ -12,7 +12,7 @@ class ProductImportJob(
     
     private val logger = LoggerFactory.getLogger(ProductImportJob::class.java)
     
-    @Scheduled(initialDelay = 0) // Every hour, start immediately
+    @Scheduled(initialDelay = 0) // Start immediately
     fun importProducts() {
         try {
             logger.info("Starting product import from external API")
